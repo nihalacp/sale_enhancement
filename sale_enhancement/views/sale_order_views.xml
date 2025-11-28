@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <record id="view_order_form_enhancement" model="ir.ui.view">
+        <field name="name">sale.order.form.enhancement</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='other_information']" position="after">
+                <page string="Extra Info" name="extra_info">
+                    <group>
+                        <group>
+                            <field name="delivery_deadline"
+                                groups="sale_enhancement.group_sale_manager_enhanced"/>
+                            <field name="priority_level"
+                                groups="sale_enhancement.group_sale_manager_enhanced"/>
+                            <field name="delivery_deadline" readonly="1"
+                                groups="!sale_enhancement.group_sale_manager_enhanced"/>
+                            <field name="priority_level" readonly="1"
+                                groups="!sale_enhancement.group_sale_manager_enhanced"/>
+                            <field name="customer_rating"/>
+                        </group>
+                        <group>
+                            <field name="is_deadline_overdue" readonly="1"/>
+                            <field name="deadline_delay_days" readonly="1"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    
+
+    <record id="sale_order_tree_view_enhanced" model="ir.ui.view">
+        <field name="name">sale.order.list.view.enhanced</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="decoration-danger">
+                    is_deadline_overdue == True
+                </attribute>
+                <attribute name="decoration-warning">
+                    priority_level == 'high'
+                </attribute>
+                <attribute name="decoration-success">
+                    priority_level == 'low'
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_partner_form_enhanced" model="ir.ui.view">
+        <field name="name">res.partner.form.enhanced</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="customer_rating"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_extend_deadline_3_days_server" model="ir.actions.server">
+        <field name="name">Mark Deadline Extended by 3 Days</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                records.action_extend_deadline_3_days()
+        </field>
+    </record>
+</odoo>
