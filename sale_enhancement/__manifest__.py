@@ -2,7 +2,7 @@
     'name': 'Sale Enhancement',
     'version': '18.0.1.0.0',
     'category': 'Sales',
-    'summary': 'Extends Sales module with deadline and priority features',
+    'summary': 'Extends Sales module with deadline and priority features in odoo18',
     'description': """
         This module enhances the Sales module with:
         - Delivery deadline tracking
