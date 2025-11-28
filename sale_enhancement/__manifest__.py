@@ -12,7 +12,6 @@
         - Enhanced security rules
     """,
     'author': 'Nihala CP',
-    'website': 'https://www.yourwebsite.com',
     'depends': ['sale', 'base'],
     'data': [
         'data/cron_data.xml',
